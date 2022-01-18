@@ -94,6 +94,13 @@ jobs:
 #          docker build  --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" .
 #          docker tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" java_demo:1.0
 #        shell: bash
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
 
       - name: Run Snyk to check Docker image for vulnerabilities
         uses: snyk/actions/docker@master
