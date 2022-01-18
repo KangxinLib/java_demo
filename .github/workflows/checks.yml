@@ -60,11 +60,16 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: ${{ env.GIT_TAG }}
 
+      - name: Build Image
+        run: |-
+          docker tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" java_demo:1.0
+        shell: bash
+
       - name: Run Snyk to check Docker image for vulnerabilities
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}
+          image: java_demo:1.0
           command: monitor
           args: --severity-threshold=high
