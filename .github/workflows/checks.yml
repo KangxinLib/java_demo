@@ -5,6 +5,12 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  GIT_TAG: ${{ github.sha }}
+
 jobs:
   sonarcloud-scan:
     name: sonarcloud-scan
@@ -68,26 +74,26 @@ jobs:
 #
 #          arguments: clean bootJar
 
-#      - name: Extract metadata (tags, labels) for Docker
-#        id: meta
-#        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-#        with:
-#          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-#          tags: ${{ env.GIT_TAG }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: ${{ env.GIT_TAG }}
 
-      - name: Build Image
-        run: |-
-          pwd
-          ls -al
-          docker build  --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" .
-          docker tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" java_demo:1.0
-        shell: bash
+#      - name: Build Image
+#        run: |-
+#          pwd
+#          ls -al
+#          docker build  --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" .
+#          docker tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" java_demo:1.0
+#        shell: bash
 
       - name: Run Snyk to check Docker image for vulnerabilities
         uses: snyk/actions/docker@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: java_demo:1.0
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}
           command: monitor
           args: --severity-threshold=high
