@@ -69,7 +69,7 @@ jobs:
       with:
         owner: KangxinLib
         repo: Deploy_ArgoCD
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.ZHU_TOKEN }}
         workflow_file_name: action.yml
         ref: main
         wait_interval: 10
