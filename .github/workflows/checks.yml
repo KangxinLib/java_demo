@@ -91,8 +91,8 @@ jobs:
         run: |-
           pwd
           ls -al
-          docker build  --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" .
-          docker tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" java_demo:1.0
+          docker build  --tag "${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" .
+          docker tag "${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" java_demo:1.0
         shell: bash
 #      - name: Build and push Docker image
 #        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
