@@ -71,7 +71,7 @@ jobs:
         repo: Deploy_ArgoCD
         github_token: ${{ secrets.GITHUB_TOKEN }}
         workflow_file_name: action.yml
-        ref: master
+        ref: main
         wait_interval: 10
         inputs: '{ "project_name": "java_demo",
                 "ci_environment_name": "${{ env.CI_ENVIRONMENT_NAME }}",
