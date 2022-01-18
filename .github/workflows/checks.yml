@@ -53,15 +53,33 @@ jobs:
         with:
           arguments: build
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: ${{ env.GIT_TAG }}
+#      - name: Gradle build
+#        uses: gradle/gradle-build-action@v1
+#        env:
+#          #GRADLE_USER_HOME: $GITHUB_WORKSPACE/.gradle
+#          SPRING_PROFILES_ACTIVE: gitlab-ci
+#          GITHUB_TOKEN: ${{ secrets.M_GITHUB_TOKEN }}
+#        with:
+#          gradle-version: 6.8.3
+#          gradle-executable: $GITHUB_WORKSPACE/gradlew
+#          distributions-cache-enabled: true
+#          dependencies-cache-enabled: true
+#          configuration-cache-enabled: false
+#
+#          arguments: clean bootJar
+
+#      - name: Extract metadata (tags, labels) for Docker
+#        id: meta
+#        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+#        with:
+#          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+#          tags: ${{ env.GIT_TAG }}
 
       - name: Build Image
         run: |-
+          pwd
+          ls -al
+          docker build  --tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" .
           docker tag "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.GIT_TAG }}" java_demo:1.0
         shell: bash
 
