@@ -28,6 +28,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Set env to dev
+      if: github.ref == 'refs/heads/main'
+      run: echo "CI_ENVIRONMENT_NAME=dev" >> $GITHUB_ENV
+
     - name: Set up JDK 17
       uses: actions/setup-java@v2
       with:
@@ -59,3 +63,19 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+
+
+    - uses: convictional/trigger-workflow-and-wait@v1.3.0
+      with:
+        owner: KangxinLib
+        repo: Deploy_ArgoCD
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        workflow_file_name: action.yml
+        ref: master
+        wait_interval: 10
+        inputs: '{ "project_name": "java_demo",
+                "ci_environment_name": "${{ env.CI_ENVIRONMENT_NAME }}",
+                "image_tag": "${{ env.GIT_TAG }}"}'
+        propagate_failure: true
+        trigger_workflow: true
+        wait_workflow: true
