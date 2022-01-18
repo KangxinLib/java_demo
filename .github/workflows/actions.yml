@@ -73,7 +73,7 @@ jobs:
         workflow_file_name: action.yml
         ref: main
         wait_interval: 10
-        inputs: '{ "project_name": "java_demo",
+        inputs: '{ "project_name": "java-demo",
                 "ci_environment_name": "${{ env.CI_ENVIRONMENT_NAME }}",
                 "image_tag": "${{ env.GIT_TAG }}"}'
         propagate_failure: true
