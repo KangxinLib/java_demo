@@ -22,7 +22,7 @@ public class DemoApplication {
     @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
     public String getEnvironment() {
         String result = "";
-        result = result + "ENVIRONMENT\n";
+        result = result + "ENVIRONMENT kangxinzhu\n";
         result = result + "-----------\n";
         for (var e : new TreeMap<>(System.getenv()).entrySet()) {
             // key length 30 so that KUBERNETES_SERVICE_PORT_HTTPS fits in
