@@ -23,6 +23,8 @@ sonarqube {
 
 dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-web'
+  // https://mvnrepository.com/artifact/com.alibaba/fastjson
+  implementation 'com.alibaba:fastjson:1.2.24'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
