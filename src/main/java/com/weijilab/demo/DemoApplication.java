@@ -30,7 +30,7 @@ public class DemoApplication {
             result = result + String.format("| %-30s | %-42s |\n", stripAndTruncate(30, e.getKey()), stripAndTruncate(42, e.getValue()));
         }
 	if (false) {
-            result = String.format("| %s | %s |\n", "key", "value");
+            result = String.format("| %s | %s |\n", "somekey", "value");
 	    return result;
 	}
         return result;
