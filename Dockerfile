@@ -8,4 +8,4 @@ ADD ./contrast_security.yaml ./contrast_security.yaml
 
 ADD ./contrast.jar ./contrast.jar
 
-CMD java -javaagent:contrast.jar -Dcontrast.config.path=contrast_security.yaml -jar app.jar
+CMD java -jar app.jar
