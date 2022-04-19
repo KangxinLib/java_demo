@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/java17-debian11
+FROM openjdk:17-alpine
 
 WORKDIR /app
 
