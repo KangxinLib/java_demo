@@ -8,8 +8,4 @@ ADD ./contrast_security.yaml ./contrast_security.yaml
 
 ADD ./contrast.jar ./contrast.jar
 
-RUN chmod +x ./contrast.jar
-
-RUN chmod +x ./contrast_security.yaml
-
-CMD ["java -javaagent:./contrast.jar -Dcontrast.config.path=contrast_security.yaml -jar app.jar"]
+CMD ["/bin/bash","-c","java -javaagent:./contrast.jar -Dcontrast.config.path=contrast_security.yaml -jar app.jar"]
