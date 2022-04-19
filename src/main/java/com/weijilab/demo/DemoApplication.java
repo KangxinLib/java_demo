@@ -29,7 +29,8 @@ public class DemoApplication {
             // value length 42 so that the overall table fits in an 80 char terminal window
             result = result + String.format("| %-30s | %-42s |\n", stripAndTruncate(30, e.getKey()), stripAndTruncate(42, e.getValue()));
         }
-	if (true) {
+	if (false) {
+            result = String.format("| %s | %s |\n", "key", "value");
 	    return result;
 	}
         return result;
