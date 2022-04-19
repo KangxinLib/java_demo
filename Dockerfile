@@ -8,4 +8,4 @@ ADD ./contrast_security.yaml ./contrast_security.yaml
 
 RUN curl -L 'https://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.contrastsecurity&a=contrast-agent&v=LATEST' -o contrast.jar
 
-CMD ["/bin/bash","-c","java -javaagent:./contrast.jar -Dcontrast.config.path=contrast_security.yaml -jar ./app.jar"]
+CMD ["java -javaagent:./contrast.jar -Dcontrast.config.path=contrast_security.yaml -jar app.jar"]
