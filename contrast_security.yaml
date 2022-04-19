@@ -1,0 +1,8 @@
+api: 
+  url: https://ce.contrastsecurity.com/Contrast
+  api_key: VhcivlgZL2io73kW24S30h6Xsc2DmcQw
+  service_key: HRQVXHKK5KXLMTFK
+  user_name: agent_2ccd1ffc-c6f9-4ee2-96af-70a630f17d63@FansOrg
+agent:
+  java:
+    standalone_app_name: java_demo
