@@ -1,6 +1,7 @@
 FROM gcr.io/distroless/java17-debian11
 
-WORKDIR /app
+WORKDIR /home/nonroot
+USER nonroot
 
 ADD ./build/libs/demo-0.0.1-SNAPSHOT.jar ./app.jar
 
