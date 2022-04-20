@@ -8,6 +8,6 @@ ADD ./contrast_security.yaml ./contrast_security.yaml
 
 ADD ./contrast.jar ./contrast.jar
 
-ENV JAVA_TOOL_OPTIONS="-javaagent:contrast.jar -Dcontrast.config.path=contrast_security.yaml -Dcontrast.log=/app/contrast.log"
+ENV JAVA_TOOL_OPTIONS="-javaagent:contrast.jar -Dcontrast.config.path=contrast_security.yaml -Dcontrast.log=/tmp/contrast.log"
 
 CMD ["app.jar"]
