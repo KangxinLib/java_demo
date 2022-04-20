@@ -12,4 +12,3 @@ COPY ./contrast.jar ./contrast.jar
 
 CMD java -javaagent:./contrast.jar -Dcontrast.config.path=contrast_security.yaml -jar ./app.jar
 
-#CMD ["app.jar"]
