@@ -1,0 +1,4 @@
+app:
+  applicationId: 15d0bbb4-e192-420d-975b-413119a4d3df
+  host: https://ingress.ngrok.buildsecurity.in/
+  env: Development
