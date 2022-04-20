@@ -32,6 +32,22 @@ public class DemoApplication {
         return result;
     }
 
+    /**
+     * @return system environment variables, formatted as an ASCII table
+     */
+    @GetMapping(value = "/basic-info", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getBasicInfo() {
+        String result = "";
+        result = result + "ENVIRONMENT kangxinz\n";
+        result = result + "-----------\n";
+        for (var e : new TreeMap<>(System.getenv()).entrySet()) {
+            // key length 30 so that KUBERNETES_SERVICE_PORT_HTTPS fits in
+            // value length 42 so that the overall table fits in an 80 char terminal window
+            result = result + String.format("| %-30s | %-42s |\n", stripAndTruncate(30, e.getKey()), stripAndTruncate(42, e.getValue()));
+        }
+        return result;
+    }
+
     private String stripAndTruncate(int length, String s) {
         return truncate(length, stripNewlinesAndTabs(s));
     }
