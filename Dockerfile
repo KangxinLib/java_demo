@@ -1,7 +1,7 @@
 FROM openjdk:17.0.2-jdk
 
 WORKDIR /home
-#USER nonroot
+USER root
 
 COPY ./build/libs/demo-0.0.1-SNAPSHOT.jar ./app.jar
 
