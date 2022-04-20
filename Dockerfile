@@ -1,4 +1,4 @@
-FROM gcr.io/distroless/java17:latest
+FROM gcr.io/distroless/java17-debian11
 
 WORKDIR /home/nonroot
 USER nonroot
