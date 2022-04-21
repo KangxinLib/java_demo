@@ -110,3 +110,19 @@ jobs:
           image: java_demo:1.0
           command: monitor
           args: --severity-threshold=high
+  hawkscan:
+    name: HawkScan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync ArgoCD Application
+        uses: omegion/argocd-actions@master
+        with:
+          address: "argocd.ngrok.buildsecurity.in"
+          token: ${{ secrets.ARGOCD_TOKEN }}
+          appName: "java-demo-dev"
+      - name: Clone repo
+        uses: actions/checkout@v2
+      - name: Run HawkScan
+        uses: stackhawk/hawkscan-action@v2.0.0
+        with:
+          apiKey: ${{ secrets.HAWKSCAN_TOKEN }}
