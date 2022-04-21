@@ -120,6 +120,10 @@ jobs:
           address: "argocd.ngrok.buildsecurity.in"
           token: ${{ secrets.ARGOCD_TOKEN }}
           appName: "java-demo-dev"
+      - name: Sleep for 30s
+        uses: juliangruber/sleep-action@v1
+        with:
+          time: 30s
       - name: Clone repo
         uses: actions/checkout@v2
       - name: Run HawkScan
