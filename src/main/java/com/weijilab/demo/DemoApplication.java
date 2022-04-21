@@ -2,34 +2,31 @@ package com.weijilab.demo;
 
 import java.util.TreeMap;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @SpringBootApplication
-@RestController
+@Controller
 public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    /**
-     * @return system environment variables, formatted as an ASCII table
-     */
-    @GetMapping(value = "/", produces = MediaType.TEXT_PLAIN_VALUE)
-    public String getEnvironment() {
-        String result = "";
-        result = result + "ENVIRONMENT kangxinz\n";
-        result = result + "-----------\n";
-        for (var e : new TreeMap<>(System.getenv()).entrySet()) {
-            // key length 30 so that KUBERNETES_SERVICE_PORT_HTTPS fits in
-            // value length 42 so that the overall table fits in an 80 char terminal window
-            result = result + String.format("| %-30s | %-42s |\n", stripAndTruncate(30, e.getKey()), stripAndTruncate(42, e.getValue()));
-        }
-        return result;
+    @GetMapping("/")
+    public String index() {
+        return "index";
+    }
+
+    @GetMapping("/greeting")
+    public String index(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+        model.addAttribute("name", name);
+        return "greeting";
     }
 
     /**
