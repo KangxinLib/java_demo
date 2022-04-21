@@ -111,13 +111,11 @@ jobs:
           command: monitor
           args: --severity-threshold=high
   hawkscan:
-    name: HawkScan
+    name: hawk-scan
     runs-on: ubuntu-latest
     steps:
-      - name: Clone repo
-        uses: actions/checkout@v2
       - name: Sync ArgoCD Application
-        uses: omegion/argocd-actions@master
+        uses: omegion/argocd-actions@v0.2.0
         with:
           address: "argocd.ngrok.buildsecurity.in"
           token: ${{ secrets.ARGOCD_TOKEN }}
