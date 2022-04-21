@@ -114,6 +114,8 @@ jobs:
     name: HawkScan
     runs-on: ubuntu-latest
     steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
       - name: Sync ArgoCD Application
         uses: omegion/argocd-actions@master
         with:
