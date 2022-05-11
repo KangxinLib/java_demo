@@ -109,7 +109,7 @@ jobs:
         with:
           image: java_demo:1.0
           command: monitor
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --severity-threshold=high
       - name: Check to see if the SARIF a was generated
         id: sarif_file_exists
         uses: andstor/file-existence-action@v1
