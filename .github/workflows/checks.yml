@@ -110,6 +110,10 @@ jobs:
           image: java_demo:1.0
           command: monitor
           args: --severity-threshold=high
+      - name: Upload result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: snyk.sarif
   hawkscan:
     name: hawk-scan
     runs-on: ubuntu-latest
