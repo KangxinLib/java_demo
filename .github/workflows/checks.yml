@@ -169,7 +169,7 @@ jobs:
           method: GET
       - name: Save repo
         run: |
-          echo ${{ steps.myRequest.outputs.response }} >> hawkscan.json
+          echo '${{ steps.myRequest.outputs.response }}' >> hawkscan.json
           ls
           cat hawkscan.json
       - name: Show Response
