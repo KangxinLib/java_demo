@@ -84,7 +84,11 @@ jobs:
       - name: Run tfsec
         uses: tfsec/tfsec-sarif-action@9a83b5c3524f825c020e356335855741fd02745f
         with:
-          sarif_file: tfsec.sarif        
+          sarif_file: tfsec.sarif
+      - name: cat tfsec
+        run: |
+          ls
+          cat tfsec.sarif
       - name: Publish report to defectdojo
         id: import-scan
         uses: ivanamat/defectdojo-import-scan@v1
