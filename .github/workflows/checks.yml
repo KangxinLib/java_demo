@@ -73,6 +73,36 @@ jobs:
         run: |
           set -e
           printf '%s\n' '${{ steps.import-scan.outputs.response }}'
+  tfsec-scan:
+    name: tfsec-scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tfsec
+        uses: tfsec/tfsec-sarif-action@9a83b5c3524f825c020e356335855741fd02745f
+        with:
+          sarif_file: tfsec.sarif        
+      - name: Publish report to defectdojo
+        id: import-scan
+        uses: ivanamat/defectdojo-import-scan@v1
+        with:
+          token: ${{ secrets.DEFECTOJO_TOKEN }}
+          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+          engagement: ${{ secrets.ENGAGEMENT }}
+          product_name: ${{ secrets.PRODUCT_NAME }}
+          file: tfsec.sarif
+          scan_type: SARIF
+          test_title: tfsec Scan
+          tags: tfsec
+          skip_duplicates: true
+          close_old_findings: true
+      - name: Show response of defectdojo
+        run: |
+          set -e
+          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
   trivy-scan:
     name: trivy-scan
     runs-on: ubuntu-latest
