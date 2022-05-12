@@ -84,11 +84,11 @@ jobs:
       - name: Run tfsec
         uses: tfsec/tfsec-sarif-action@9a83b5c3524f825c020e356335855741fd02745f
         with:
-          sarif_file: tfsec.sarif
+          sarif_file: tfsec.json
       - name: cat tfsec
         run: |
           ls
-          cat tfsec.sarif
+          cat tfsec.json
       - name: Publish report to defectdojo
         id: import-scan
         uses: ivanamat/defectdojo-import-scan@v1
@@ -97,7 +97,7 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: tfsec.sarif
+          file: tfsec.json
           scan_type: SARIF
           test_title: tfsec Scan
           tags: tfsec
