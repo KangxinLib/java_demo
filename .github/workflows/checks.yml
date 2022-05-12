@@ -55,15 +55,22 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           json: true
-      - name: snyk
-        run: |
-          ls
-          find snyk.json
-          cat snyk.json
-      - name: Upload result to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v1
+      - name: Publish report to defectdojo
+        id: import-scan
+        uses: ivanamat/defectdojo-import-scan@v1
         with:
-          sarif_file: snyk.sarif
+          token: ${{ secrets.DEFECTOJO_TOKEN }}
+          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+          engagement: ${{ secrets.ENGAGEMENT }}
+          product_name: ${{ secrets.PRODUCT_NAME }}
+          file: snyk.json
+          scan_type: Snyk Scan
+          test_title: Snyk Scan
+          tags: snyk
+      - name: Show response of defectdojo
+        run: |
+          set -e
+          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
 
       - name: Set up JDK 17
         uses: actions/setup-java@v2
