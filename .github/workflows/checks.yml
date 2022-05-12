@@ -156,8 +156,8 @@ jobs:
         run: |
           set -e
           printf '%s\n' '${{ steps.import-scan.outputs.response }}'
-  downloadHawkscan:
-    name: downloadHawkscan
+  hawkscan_defectdojo:
+    name: hawkscan_defectdojo
     runs-on: ubuntu-latest
     steps:
       - name: Make Request
@@ -170,10 +170,24 @@ jobs:
       - name: Save repo
         run: |
           echo '${{ steps.myRequest.outputs.response }}' >> hawkscan.json
-          ls
-          cat hawkscan.json
-      - name: Show Response
-        run: echo ${{ steps.myRequest.outputs.response }}
+      - name: Publish report to defectdojo
+        id: import-scan
+        uses: ivanamat/defectdojo-import-scan@v1
+        with:
+          token: ${{ secrets.DEFECTOJO_TOKEN }}
+          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+          engagement: ${{ secrets.ENGAGEMENT }}
+          product_name: ${{ secrets.PRODUCT_NAME }}
+          file: hawkscan.json
+          scan_type: StackHawk HawkScan
+          test_title: StackHawk HawkScan
+          tags: hawkscan
+          skip_duplicates: true
+          close_old_findings: true
+      - name: Show response of defectdojo
+        run: |
+          set -e
+          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
   hawkscan:
     name: hawk-scan
     runs-on: ubuntu-latest
