@@ -156,6 +156,19 @@ jobs:
         run: |
           set -e
           printf '%s\n' '${{ steps.import-scan.outputs.response }}'
+  downloadHawkscan:
+    name: downloadHawkscan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make Request
+        id: myRequest
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://api.stackhawk.com/api/v1/scan/12c11bb3-72ad-46d0-8f08-31a9c3460c37?pageSize=100&sortField=id&sortDir=desc"
+          bearerToken: Bearer ${{ secrets.HAWKSCAN_TOKEN }}
+          method: GET
+      - name: Show Response
+        run: echo ${{ steps.myRequest.outputs.response }}
   hawkscan:
     name: hawk-scan
     runs-on: ubuntu-latest
