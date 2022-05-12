@@ -67,6 +67,8 @@ jobs:
           scan_type: Snyk Scan
           test_title: Snyk Scan
           tags: snyk
+          skip_duplicates: true
+          close_old_findings: true
       - name: Show response of defectdojo
         run: |
           set -e
@@ -114,6 +116,8 @@ jobs:
           scan_type: Trivy Scan
           test_title: Trivy Scan
           tags: trivy
+          skip_duplicates: true
+          close_old_findings: true
       - name: Show response of defectdojo
         run: |
           set -e
