@@ -114,7 +114,8 @@ jobs:
       - name: snyk
         run: |
           ls
-          cat snyk.sarif
+          find snyk.json
+          cat snyk.json
       - name: Check to see if the SARIF a was generated
         id: sarif_file_exists
         uses: andstor/file-existence-action@v1
