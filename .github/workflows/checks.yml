@@ -154,8 +154,7 @@ jobs:
           close_old_findings: true
       - name: Show response of defectdojo
         run: |
-          set -e
-          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
+          echo ${{ steps.import-scan.outputs.response }}
   hawkscan_defectdojo:
     name: hawkscan_defectdojo
     runs-on: ubuntu-latest
