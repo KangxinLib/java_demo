@@ -40,6 +40,46 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew build sonarqube --info
+  sonarcloud-upload:
+    name: sonarcloud-scan-upload
+    runs-on: ubuntu-latest
+#    needs: sonarcloud-scan
+    steps:
+      - name: dowload tool
+        run: npm install -g sonar-report
+      - name: doload sonar report
+        run: |
+          sonar-report \
+            --sonarurl="https://sonarcloud.io" \
+            --sonarOrganization="KangxinLib" \
+            --sonarcomponent="KangxinLib_java_demo" \
+            --project="KangxinLib_java_demo" \
+            --application="KangxinLib_java_demo" \
+            --release="1.0.0" \
+            --branch="main" \
+            --sinceleakperiod="false" \
+            --allbugs="false" > sonar-report_sonar-report.html
+      - name: Publish report to defectdojo
+        id: import-scan
+        uses: ivanamat/defectdojo-import-scan@v1
+        with:
+          token: ${{ secrets.DEFECTOJO_TOKEN }}
+          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+          engagement: ${{ secrets.ENGAGEMENT }}
+          product_name: ${{ secrets.PRODUCT_NAME }}
+          file: sonar-report_sonar-report.html
+          scan_type: SonarQube Scan detailed
+          test_title: Sonar Scan detailed
+          tags: Sonar
+          skip_duplicates: true
+          close_old_findings: true
+          branch_tag: ${{ github.base_ref }}
+          build_id: ${{ github.run_id }}
+          commit_hash: ${{ github.sha }}
+      - name: Show response of defectdojo
+        run: |
+          set -e
+          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
   snyk-scan:
     name: snyk-scan
     runs-on: ubuntu-latest
