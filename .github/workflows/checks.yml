@@ -42,10 +42,11 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
-          output: codeql.sarif
+          output: /codeql
           upload: false
       - run: |
           ls -al
+          ls /codeql -al
           echo codeql.sarif
       - name: Publish report to defectdojo
         id: import-scan
