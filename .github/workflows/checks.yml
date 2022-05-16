@@ -39,15 +39,14 @@ jobs:
         uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
         with:
           arguments: build
+      - run: mkdir codeql
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
-          output: /codeql
+          output: ./codeql
           upload: false
       - run: |
-          ls -al
-          ls /codeql -al
-          echo codeql.sarif
+          cat ./codeql/java.sarif
       - name: Publish report to defectdojo
         id: import-scan
         uses: ivanamat/defectdojo-import-scan@v1
@@ -56,13 +55,13 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: codeql.sarif
+          file: ./codeql/java.sarif
           scan_type: SARIF
           test_title: Codeql Scan
           tags: codeql
           skip_duplicates: true
           close_old_findings: true
-          branch_tag: ${{ github.base_ref }}
+          branch_tag: main
           build_id: ${{ github.run_id }}
           commit_hash: ${{ github.sha }}
       - name: Show response of defectdojo
