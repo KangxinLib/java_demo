@@ -44,6 +44,9 @@ jobs:
         with:
           output: codeql.sarif
           upload: false
+      - run: |
+          ls -al
+          echo codeql.sarif
       - name: Publish report to defectdojo
         id: import-scan
         uses: ivanamat/defectdojo-import-scan@v1
