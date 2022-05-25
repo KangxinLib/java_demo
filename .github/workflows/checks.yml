@@ -204,7 +204,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          json: true
+          args: --sarif-file-output=snyk.sarif
       - name: Publish report to defectdojo
         id: import-scan
         uses: ivanamat/defectdojo-import-scan@v1
@@ -213,8 +213,8 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: snyk.json
-          scan_type: Snyk Scan
+          file: snyk.sarif
+          scan_type: SARIF
           test_title: Snyk Scan
           tags: snyk
           skip_duplicates: true
