@@ -190,43 +190,43 @@ jobs:
         run: |
           set -e
           printf '%s\n' '${{ steps.import-scan.outputs.response }}'
-  snyk-scan:
-    name: snyk-scan
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/gradle@master
-        continue-on-error: true # To make sure that SARIF upload gets called
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          args: --sarif-file-output=snyk.sarif
-      - name: Publish report to defectdojo
-        id: import-scan
-        uses: ivanamat/defectdojo-import-scan@v1
-        with:
-          token: ${{ secrets.DEFECTOJO_TOKEN }}
-          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-          engagement: ${{ secrets.ENGAGEMENT }}
-          product_name: ${{ secrets.PRODUCT_NAME }}
-          file: snyk.sarif
-          scan_type: SARIF
-          test_title: Snyk Scan
-          tags: snyk
-          skip_duplicates: true
-          close_old_findings: true
-          push_to_jira: false
-          branch_tag: ${{ github.base_ref }}
-          build_id: ${{ github.run_id }}
-          commit_hash: ${{ github.sha }}
-      - name: Show response of defectdojo
-        run: |
-          set -e
-          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
+#  snyk-scan:
+#    name: snyk-scan
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: read
+#      packages: write
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Run Snyk to check for vulnerabilities
+#        uses: snyk/actions/gradle@master
+#        continue-on-error: true # To make sure that SARIF upload gets called
+#        env:
+#          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#        with:
+#          args: --sarif-file-output=snyk.sarif
+#      - name: Publish report to defectdojo
+#        id: import-scan
+#        uses: ivanamat/defectdojo-import-scan@v1
+#        with:
+#          token: ${{ secrets.DEFECTOJO_TOKEN }}
+#          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+#          engagement: ${{ secrets.ENGAGEMENT }}
+#          product_name: ${{ secrets.PRODUCT_NAME }}
+#          file: snyk.sarif
+#          scan_type: SARIF
+#          test_title: Snyk Scan
+#          tags: snyk
+#          skip_duplicates: true
+#          close_old_findings: true
+#          push_to_jira: false
+#          branch_tag: ${{ github.base_ref }}
+#          build_id: ${{ github.run_id }}
+#          commit_hash: ${{ github.sha }}
+#      - name: Show response of defectdojo
+#        run: |
+#          set -e
+#          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
   tfsec-scan:
     name: tfsec-scan
     runs-on: ubuntu-latest
