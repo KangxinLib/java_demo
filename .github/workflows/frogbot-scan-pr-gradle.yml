@@ -46,7 +46,7 @@ jobs:
 
           # [Mandatory]
           # The GitHub token automatically generated for the job
-          JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JF_GIT_TOKEN: ${{ secrets.KANGXIN_TOEKN }}
 
           # [Optional, default: https://api.github.com]
           # API endpoint to GitHub
@@ -56,7 +56,7 @@ jobs:
           # If the machine that runs Frogbot has no access to the internet, set the name of a remote repository
           # in Artifactory, which proxies https://releases.jfrog.io
           # The 'frogbot' executable and other tools it needs will be downloaded through this repository.
-          # JF_RELEASES_REPO: ""
+          JF_RELEASES_REPO: "https://zhukangxin.jfrog.io"
 
 
 
@@ -71,11 +71,11 @@ jobs:
 
           # [Optional]
           # Xray Watches. Learn more about them here: https://www.jfrog.com/confluence/display/JFROG/Configuring+Xray+Watches
-          # JF_WATCHES: <watch-1>,<watch-2>...<watch-n>
+          JF_WATCHES: Security_watch_1
 
           # [Optional]
           # JFrog project. Learn more about it here: https://www.jfrog.com/confluence/display/JFROG/Projects
-          # JF_PROJECT: <project-key>
+          JF_PROJECT: jfrog
 
           # [Optional, default: "FALSE"]
           # Displays all existing vulnerabilities, including the ones that were added by the pull request.
