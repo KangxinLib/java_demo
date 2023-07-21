@@ -65,17 +65,17 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
 
 
-    - uses: convictional/trigger-workflow-and-wait@v1.3.0
-      with:
-        owner: KangxinLib
-        repo: Deploy_ArgoCD
-        github_token: ${{ secrets.ZHU_TOKEN }}
-        workflow_file_name: action.yml
-        ref: main
-        wait_interval: 10
-        inputs: '{ "project_name": "java-demo",
-                "ci_environment_name": "${{ env.CI_ENVIRONMENT_NAME }}",
-                "image_tag": "${{ env.GIT_TAG }}"}'
-        propagate_failure: true
-        trigger_workflow: true
-        wait_workflow: true
+    # - uses: convictional/trigger-workflow-and-wait@v1.3.0
+    #   with:
+    #     owner: KangxinLib
+    #     repo: Deploy_ArgoCD
+    #     github_token: ${{ secrets.ZHU_TOKEN }}
+    #     workflow_file_name: action.yml
+    #     ref: main
+    #     wait_interval: 10
+    #     inputs: '{ "project_name": "java-demo",
+    #             "ci_environment_name": "${{ env.CI_ENVIRONMENT_NAME }}",
+    #             "image_tag": "${{ env.GIT_TAG }}"}'
+    #     propagate_failure: true
+    #     trigger_workflow: true
+    #     wait_workflow: true
