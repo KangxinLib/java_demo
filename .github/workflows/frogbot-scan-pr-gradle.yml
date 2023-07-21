@@ -3,11 +3,12 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types: [opened, synchronize, reopened]
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
 permissions:
   pull-requests: write
   contents: read
+  push: write
 jobs:
   scan-pull-request-push:
     runs-on: ubuntu-latest
@@ -49,7 +50,7 @@ jobs:
 
           # [Mandatory]
           # The GitHub token automatically generated for the job
-          JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JF_GIT_TOKEN: ${{ secrets.KANGXIN_TOEKN }}
 
           # [Optional, default: https://api.github.com]
           # API endpoint to GitHub
