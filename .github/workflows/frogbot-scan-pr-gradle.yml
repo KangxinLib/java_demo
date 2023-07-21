@@ -1,30 +1,20 @@
-name: "Frogbot Scan and Fix"
+name: "Frogbot Scan Pull Request"
 on:
-  workflow_dispatch:
-  schedule:
-    # The repository will be scanned once a day at 00:00 GMT.
-    - cron: "* * * * *"
-  push:
-    branches:
-      - main
+  pull_request_target:
+    types: [opened, synchronize]
 permissions:
-  contents: write
   pull-requests: write
-  security-events: write
+  contents: read
 jobs:
-  create-fix-pull-requests:
+  scan-pull-request:
     runs-on: ubuntu-latest
     # A pull request needs to be approved, before Frogbot scans it. Any GitHub user who is associated with the
     # "frogbot" GitHub environment can approve the pull request to be scanned.
-    # environment: frogbot
-    strategy:
-      matrix:
-        # The repository scanning will be triggered periodically on the following branches.
-        branch: [ "main" ]
+    environment: frogbot
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ matrix.branch }}
+          ref: ${{ github.event.pull_request.head.sha }}
 
       # Install prerequisites
       - name: Set up Java
@@ -56,7 +46,7 @@ jobs:
 
           # [Mandatory]
           # The GitHub token automatically generated for the job
-          JF_GIT_TOKEN: ${{ secrets.KANGXIN_TOEKN }}
+          JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
           # [Optional, default: https://api.github.com]
           # API endpoint to GitHub
@@ -66,7 +56,7 @@ jobs:
           # If the machine that runs Frogbot has no access to the internet, set the name of a remote repository
           # in Artifactory, which proxies https://releases.jfrog.io
           # The 'frogbot' executable and other tools it needs will be downloaded through this repository.
-          # JF_RELEASES_REPO: "https://zhukangxin.jfrog.io"
+          # JF_RELEASES_REPO: ""
 
 
 
@@ -81,11 +71,11 @@ jobs:
 
           # [Optional]
           # Xray Watches. Learn more about them here: https://www.jfrog.com/confluence/display/JFROG/Configuring+Xray+Watches
-          JF_WATCHES: Security_watch_1
+          # JF_WATCHES: <watch-1>,<watch-2>...<watch-n>
 
           # [Optional]
           # JFrog project. Learn more about it here: https://www.jfrog.com/confluence/display/JFROG/Projects
-          JF_PROJECT: jfrog
+          # JF_PROJECT: <project-key>
 
           # [Optional, default: "FALSE"]
           # Displays all existing vulnerabilities, including the ones that were added by the pull request.
