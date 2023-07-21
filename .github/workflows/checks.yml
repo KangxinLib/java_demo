@@ -310,7 +310,13 @@ jobs:
       - run: |
           jf rt ping
 
-          jf docker scan java_demo:1.0
+          # jf docker scan java_demo:1.0 
+
+          jf docker scan java_demo:1.0 --min-severity High --fixable-only --format json
+
+          ls -al 
+
+
 
       # - name: Publish report to defectdojo
       #   id: import-scan
