@@ -1,24 +1,27 @@
-name: "Frogbot Scan Pull Request"
+name: "Frogbot Scan and Fix"
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+  schedule:
+    # The repository will be scanned once a day at 00:00 GMT.
+    - cron: "0 0 * * *"
 permissions:
+  contents: write
   pull-requests: write
-  contents: read
-  # push: write
+  security-events: write
 jobs:
-  scan-pull-request-push:
+  create-fix-pull-requests:
     runs-on: ubuntu-latest
     # A pull request needs to be approved, before Frogbot scans it. Any GitHub user who is associated with the
     # "frogbot" GitHub environment can approve the pull request to be scanned.
     environment: frogbot
+    strategy:
+      matrix:
+        # The repository scanning will be triggered periodically on the following branches.
+        branch: [ "main" ]
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: ${{ matrix.branch }}
 
       # Install prerequisites
       - name: Set up Java
