@@ -318,7 +318,7 @@ jobs:
           bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
           ignoreStatusCodes: '400,404,401'
-          responseFile: ./xray
+          responseFile: ./
 
       # - name: Decompress
       #   uses: TonyBogdanov/zip@1.0
