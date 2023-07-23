@@ -323,24 +323,37 @@ jobs:
 
 
 
-      - name: Publish report to defectdojo
+      # - name: Publish report to defectdojo
+      #   id: import-scan
+      #   uses: ivanamat/defectdojo-import-scan@v1
+      #   with:
+      #     token: ${{ secrets.DEFECTOJO_TOKEN }}
+      #     defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+      #     engagement: ${{ secrets.ENGAGEMENT }}
+      #     product_name: ${{ secrets.PRODUCT_NAME }}
+      #     file: Jfrog-xray.json
+      #     scan_type: JFrog Xray Scan
+      #     test_title: JFrog Xray Scan
+      #     tags: JFrog Xray
+      #     skip_duplicates: true
+      #     close_old_findings: true
+      #     push_to_jira: false
+      #     branch_tag: ${{ github.base_ref }}
+      #     build_id: ${{ github.run_id }}
+      #     commit_hash: ${{ github.sha }}
+      - name: import scan results into defectdojo
         id: import-scan
-        uses: ivanamat/defectdojo-import-scan@v1
+        uses: portswigger-cloud/defectdojo-github-action@v1
         with:
-          token: ${{ secrets.DEFECTOJO_TOKEN }}
-          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-          engagement: ${{ secrets.ENGAGEMENT }}
-          product_name: ${{ secrets.PRODUCT_NAME }}
-          file: Jfrog-xray.json
-          scan_type: JFrog Xray Scan
-          test_title: JFrog Xray Scan
-          tags: JFrog Xray
-          skip_duplicates: true
-          close_old_findings: true
-          push_to_jira: false
-          branch_tag: ${{ github.base_ref }}
-          build_id: ${{ github.run_id }}
-          commit_hash: ${{ github.sha }}
+          defectdojo-url: ${{ secrets.DEFECTOJO_URL }}
+          defectdojo-username: defectdojo
+          defectdojo-password:  defectdojo@123
+          defectdojo-product-type: Research and Development
+          defectdojo-product: onesec-api
+          # defectdojo-environment-type: 
+          defectdojo-scan-type: JFrog Xray Scan
+          defectdojo-engagement-name: 12345
+          scan-results-file-name: Jfrog-xray.json
       - name: Show response of defectdojo
         run: |
           echo ${{ steps.import-scan.outputs.response }}
