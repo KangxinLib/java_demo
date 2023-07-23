@@ -318,19 +318,20 @@ jobs:
           bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
           ignoreStatusCodes: '400,404,401'
-          responseFile: ./Jfrog-xray.zip
+          responseFile: ./kangxinzhu.zip
 
       # - name: Decompress
       #   uses: TonyBogdanov/zip@1.0
       #   with:
       #       args: unzip -qq ./kangxinzhu.zip
          
-      # - name: Save repo
-      #   run: |
+      - name: Save repo
+        run: |
          
-      #     echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.zip
+          unzip kangxinzhu.zip
+          ls -al
 
-      #   # shell: bash
+        shell: bash
 
 
       - name: Publish report to defectdojo
@@ -341,7 +342,7 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: Jfrog-xray.zip
+          file: kangxinzhu.json
           scan_type: JFrog Xray Scan
           test_title: JFrog Xray Scan
           tags: JFrog Xray
