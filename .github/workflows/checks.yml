@@ -308,7 +308,7 @@ jobs:
           # JFrog Platform access token
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-
+      - run: mkdir xray
       - name: Make Request
         id: myRequest
         uses: fjogeleit/http-request-action@v1
@@ -318,7 +318,7 @@ jobs:
           bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
           ignoreStatusCodes: '400,404,401'
-          responseFile: ./kangxinzhu.zip
+          responseFile: ./xray
 
       # - name: Decompress
       #   uses: TonyBogdanov/zip@1.0
@@ -327,8 +327,8 @@ jobs:
          
       - name: Save repo
         run: | 
-          unzip kangxinzhu.zip
-          ls -al
+          
+          ls -al ./xray
 
         # shell: bash
 
