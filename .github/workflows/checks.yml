@@ -307,33 +307,22 @@ jobs:
           # or
           # JFrog Platform access token
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-      # - run: |
-      #     jf rt ping
 
-      #     jf -v
 
-      #     # jf docker scan java_demo:1.0 
+      - name: Make Request
+        id: myRequest
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/2'
+          method: 'GET'
+          bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
+          customHeaders: '{"Content-Type": "application/json"}'
+          data: '{"projectKey": "test", "file_name": "xray", "format": "json"}'
+      - name: Save repo
+        run: |
+          echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.json
 
-      #     jf docker scan java_demo:1.0 --format json > Jfrog-xray.json
-
-      #     echo "----------------------------"
-
-      #     cat Jfrog-xray.json
-
-     - name: Make Request
-       id: myRequest
-       uses: fjogeleit/http-request-action@v1
-       with:
-         url: 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/2'
-         method: 'GET'
-         bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
-         customHeaders: '{"Content-Type": "application/json"}'
-         data: '{"projectKey": "test", "file_name": "xray", "format": "json"}'
-     - name: Save repo
-       run: |
-         echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.json
-
-         cat Jfrog-xray.json
+          cat Jfrog-xray.json
 
 
       - name: Publish report to defectdojo
@@ -354,19 +343,7 @@ jobs:
           branch_tag: ${{ github.base_ref }}
           build_id: ${{ github.run_id }}
           commit_hash: ${{ github.sha }}
-      # - name: import scan results into defectdojo
-      #   id: import-scan
-      #   uses: portswigger-cloud/defectdojo-active-findings@v1.0.3
-      #   with:
-      #     defectdojo-url: ${{ secrets.DEFECTOJO_URL }}
-      #     defectdojo-username: "defectdojo"
-      #     defectdojo-password:  "defectdojo@123"
-      #     defectdojo-product-type: "Research and Development"
-      #     defectdojo-product: "onesec-api"
-      #     # defectdojo-environment-type: 
-      #     defectdojo-scan-type: JFrog Xray Scan
-      #     defectdojo-engagement-name: 12345
-      #     scan-results-file-name: Jfrog-xray.json
+
       - name: Show response of defectdojo
         run: |
           echo ${{ steps.import-scan.outputs.response }}
