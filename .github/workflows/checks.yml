@@ -313,11 +313,11 @@ jobs:
         id: myRequest
         uses: fjogeleit/http-request-action@v1
         with:
-          url: 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/4'
+          url: 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/4?file_name=kangxinzhu&format=json&projectKey=test'
           method: 'GET'
           bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
-          data: '{"projectKey": "test", "file_name": "kangxinzhu", "format": "json"}'
+         
       - name: Save repo
         run: |
           echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.json
