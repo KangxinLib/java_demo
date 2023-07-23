@@ -314,7 +314,11 @@ jobs:
 
           # jf docker scan java_demo:1.0 
 
-          jf docker scan java_demo:1.0 --min-severity High --fixable-only --watches=Security_watch_1 --format sarif > Jfrog-xray.sarif
+          jf docker scan java_demo:1.0 --format json > Jfrog-xray.json
+
+          echo "----------------------------"
+
+          cat Jfrog-xray.json
 
 
 
@@ -327,7 +331,7 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: Jfrog-xray.sarif
+          file: Jfrog-xray.json
           scan_type: JFrog Xray Scan
           test_title: JFrog Xray Scan
           tags: JFrog Xray
