@@ -307,20 +307,33 @@ jobs:
           # or
           # JFrog Platform access token
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-      - run: |
-          jf rt ping
+      # - run: |
+      #     jf rt ping
 
-          jf -v
+      #     jf -v
 
-          # jf docker scan java_demo:1.0 
+      #     # jf docker scan java_demo:1.0 
 
-          jf docker scan java_demo:1.0 --format json > Jfrog-xray.json
+      #     jf docker scan java_demo:1.0 --format json > Jfrog-xray.json
 
-          echo "----------------------------"
+      #     echo "----------------------------"
 
-          cat Jfrog-xray.json
+      #     cat Jfrog-xray.json
 
+     - name: Make Request
+       id: myRequest
+       uses: fjogeleit/http-request-action@v1
+       with:
+         url: 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/2'
+         method: 'GET'
+         bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
+         customHeaders: '{"Content-Type": "application/json"}'
+         data: '{"projectKey": "test", "file_name": "xray", "format": "json"}'
+     - name: Save repo
+       run: |
+         echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.json
 
+         cat Jfrog-xray.json
 
 
       - name: Publish report to defectdojo
@@ -332,7 +345,7 @@ jobs:
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
           file: Jfrog-xray.json
-          scan_type: SARIF
+          scan_type: JFrog Xray Scan
           test_title: JFrog Xray Scan
           tags: JFrog Xray
           skip_duplicates: true
