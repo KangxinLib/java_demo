@@ -318,6 +318,7 @@ jobs:
           bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
           ignoreStatusCodes: '400,404,401'
+          # responseFile: 
 
       # - name: Decompress
       #   uses: TonyBogdanov/zip@1.0
@@ -327,9 +328,9 @@ jobs:
       - name: Save repo
         run: |
          
-          ls -al
+          echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.json
 
-        shell: bash
+        # shell: bash
 
 
       - name: Publish report to defectdojo
