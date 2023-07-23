@@ -326,12 +326,11 @@ jobs:
       #       args: unzip -qq ./kangxinzhu.zip
          
       - name: Save repo
-        run: |
-         
+        run: | 
           unzip kangxinzhu.zip
           ls -al
 
-        shell: bash
+        # shell: bash
 
 
       - name: Publish report to defectdojo
