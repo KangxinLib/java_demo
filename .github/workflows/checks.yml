@@ -310,11 +310,12 @@ jobs:
       - run: |
           jf rt ping
 
+          jf -v
+
           # jf docker scan java_demo:1.0 
 
-          jf docker scan java_demo:1.0 --min-severity High --fixable-only --format json --output-file=xray.json
+          jf docker scan java_demo:1.0 --min-severity High --fixable-only --watches=Security_watch_1 --format json > xray.json
 
-          ls -al 
 
 
 
