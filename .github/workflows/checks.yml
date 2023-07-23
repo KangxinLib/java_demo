@@ -343,7 +343,7 @@ jobs:
       #     commit_hash: ${{ github.sha }}
       - name: import scan results into defectdojo
         id: import-scan
-        uses: portswigger-cloud/defectdojo-github-action@v1
+        uses: portswigger-cloud/defectdojo-active-findings@v1.0.3
         with:
           defectdojo-url: ${{ secrets.DEFECTOJO_URL }}
           defectdojo-username: defectdojo
