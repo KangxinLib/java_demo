@@ -328,7 +328,7 @@ jobs:
       - name: Save repo
         run: |
          
-          echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.json
+          echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.zip
 
         # shell: bash
 
@@ -341,7 +341,7 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: Jfrog-xray.json
+          file: Jfrog-xray.zip
           scan_type: JFrog Xray Scan
           test_title: JFrog Xray Scan
           tags: JFrog Xray
