@@ -317,17 +317,18 @@ jobs:
           method: 'GET'
           bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
           customHeaders: '{"Content-Type": "application/json"}'
+          ignoreStatusCodes: '400,404,401'
 
-      - name: Decompress
-        uses: TonyBogdanov/zip@1.0
-        with:
-            args: unzip -qq ./kangxinzhu.zip
+      # - name: Decompress
+      #   uses: TonyBogdanov/zip@1.0
+      #   with:
+      #       args: unzip -qq ./kangxinzhu.zip
          
       - name: Save repo
         run: |
-          # echo '${{ steps.myRequest.outputs.response }}' >> Jfrog-xray.json
+         
           ls -al 
-          cat kangxinzhu.json
+         
 
 
       - name: Publish report to defectdojo
