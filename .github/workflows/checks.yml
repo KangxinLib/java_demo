@@ -296,7 +296,7 @@ jobs:
       #     format: 'json'
       #     output: 'trivy-results.json'
       #     severity: 'CRITICAL,HIGH'
-      - uses: jfrog/setup-jfrog-cli@v3
+      - uses: jfrog/setup-jfrog-cli@v3.3.0
         env:
           # JFrog platform url (for example: https://acme.jfrog.io) 
           JF_URL: ${{ secrets.JF_URL }}
@@ -314,7 +314,7 @@ jobs:
 
           # jf docker scan java_demo:1.0 
 
-          jf docker scan java_demo:1.0 --min-severity High --fixable-only --watches=Security_watch_1 --format json > Jfrog-xray.json
+          jf docker scan java_demo:1.0 --min-severity High --fixable-only --watches=Security_watch_1 --format sarif > Jfrog-xray.sarif
 
 
 
@@ -327,7 +327,7 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: Jfrog-xray.json
+          file: Jfrog-xray.sarif
           scan_type: JFrog Xray Scan
           test_title: JFrog Xray Scan
           tags: JFrog Xray
