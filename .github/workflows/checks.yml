@@ -333,7 +333,7 @@ jobs:
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
           file: jfrog-xray.json
-          scan_type: JFrogXRay
+          scan_type: JFrog XRay
           test_title: JFrog Xray Scan
           tags: JFrog Xray
           skip_duplicates: true
