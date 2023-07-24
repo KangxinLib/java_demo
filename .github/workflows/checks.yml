@@ -175,7 +175,7 @@ jobs:
       - name: Parse report ID
         run: | 
           
-          report_id ="$(echo ' jq ".report_id" xray-report-status.json ')"
+          report_id ="$(echo jq '.report_id' xray-report-status.json )"
           echo "$report_id"
           echo "GENERATE_REPORT_ID=$report_id" >> $GITHUB_ENV
 
