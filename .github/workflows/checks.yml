@@ -82,11 +82,13 @@ jobs:
         continue-on-error: true # To make sure that SARIF upload gets called
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        json: true
         with:
           args: --sarif-file-output=snyk.sarif
-      - name: show snyk.sarif
+      - name: show snyk.sarif & snyk.json
         run: |
           cat snyk.sarif
+          cat snyk.json
       - name: Upload Test results
         uses: actions/upload-artifact@master
         with:
