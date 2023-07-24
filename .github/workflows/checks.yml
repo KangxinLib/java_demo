@@ -335,7 +335,7 @@ jobs:
 
           docker pull nginx
 
-          jf docker scan nginx --min-severity High --fixable-only --watches=Security_watch_1 --format sarif > kangxinzhu.sarif
+          jf docker scan java_demo:1.0  --min-severity High --fixable-only --watches=Security_watch_1 --format sarif > kangxinzhu.sarif
 
         # shell: bash
 
