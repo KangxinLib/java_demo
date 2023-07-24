@@ -115,44 +115,6 @@ jobs:
           set -e
           printf '%s\n' '${{ steps.import-scan.outputs.response }}'
   
-  tfsec-scan:
-    name: tfsec-scan
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run tfsec
-        uses: aquasecurity/tfsec-sarif-action@v0.1.0
-        with:
-          sarif_file: tfsec.sarif
-      - name: cat tfsec
-        run: |
-          ls
-          cat tfsec.sarif
-      - name: Publish report to defectdojo
-        id: import-scan
-        uses: ivanamat/defectdojo-import-scan@v1
-        with:
-          token: ${{ secrets.DEFECTOJO_TOKEN }}
-          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-          engagement: ${{ secrets.ENGAGEMENT }}
-          product_name: ${{ secrets.PRODUCT_NAME }}
-          file: tfsec.sarif
-          scan_type: SARIF
-          test_title: tfsec Scan
-          tags: tfsec
-          skip_duplicates: true
-          close_old_findings: true
-          branch_tag: ${{ github.base_ref }}
-          build_id: ${{ github.run_id }}
-          commit_hash: ${{ github.sha }}
-      - name: Show response of defectdojo
-        run: |
-          set -e
-          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
-
   xray-scan:
     name: xray-scan
     runs-on: ubuntu-latest
@@ -178,13 +140,6 @@ jobs:
           docker tag "java_demo:${{ env.GIT_TAG }}" java_demo:1.0
         shell: bash
 
-      # - name: Run Trivy vulnerability scanner
-      #   uses: aquasecurity/trivy-action@2a2157eb22c08c9a1fac99263430307b8d1bc7a2
-      #   with:
-      #     image-ref: java_demo:1.0
-      #     format: 'json'
-      #     output: 'trivy-results.json'
-      #     severity: 'CRITICAL,HIGH'
       - uses: jfrog/setup-jfrog-cli@v3.3.0
         env:
           # JFrog platform url (for example: https://acme.jfrog.io) 
@@ -197,21 +152,6 @@ jobs:
           # JFrog Platform access token
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-      # - run: mkdir xray
-      # - name: Make Request
-      #   id: myRequest
-      #   uses: fjogeleit/http-request-action@v1
-      #   with:
-      #     url: 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/4?file_name=kangxinzhu&format=json&projectKey=test'
-      #     method: 'GET'
-      #     bearerToken: ${{ secrets.JF_ACCESS_TOKEN }}
-      #     customHeaders: '{"Content-Type": "application/json"}'
-      #     ignoreStatusCodes: '400,404,401'
-
-      # - name: Decompress
-      #   uses: TonyBogdanov/zip@1.0
-      #   with:
-      #       args: unzip -qq ./kangxinzhu.zip
          
       - name: Save repo
         run: | 
@@ -245,41 +185,41 @@ jobs:
         run: |
           echo ${{ steps.import-scan.outputs.response }}
 
-#  hawkscan_defectdojo:
-#    name: hawkscan_defectdojo
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Make Request
-#        id: myRequest
-#        uses: fjogeleit/http-request-action@v1
-#        with:
-#          url: "https://api.stackhawk.com/api/v1/scan/e3e27165-aea8-41e9-ad55-75970e1fa2be?pageSize=100&sortField=id&sortDir=desc"
-#          bearerToken: ${{ secrets.HAWKSCAN_TEM_TOKEN }}
-#          method: GET
-#      - name: Save repo
-#        run: |
-#          echo '${{ steps.myRequest.outputs.response }}' >> hawkscan.json
-#      - name: Publish report to defectdojo
-#        id: import-scan
-#        uses: ivanamat/defectdojo-import-scan@v1
-#        with:
-#          token: ${{ secrets.DEFECTOJO_TOKEN }}
-#          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-#          engagement: ${{ secrets.ENGAGEMENT }}
-#          product_name: ${{ secrets.PRODUCT_NAME }}
-#          file: hawkscan.json
-#          scan_type: StackHawk HawkScan
-#          test_title: StackHawk HawkScan
-#          tags: hawkscan
-#          skip_duplicates: true
-#          close_old_findings: true
-#          branch_tag: ${{ github.base_ref }}
-#          build_id: ${{ github.run_id }}
-#          commit_hash: ${{ github.sha }}
-#      - name: Show response of defectdojo
-#        run: |
-#          set -e
-#          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
+ hawkscan_defectdojo:
+   name: hawkscan_defectdojo
+   runs-on: ubuntu-latest
+   steps:
+     - name: Make Request
+       id: myRequest
+       uses: fjogeleit/http-request-action@v1
+       with:
+         url: "https://api.stackhawk.com/api/v1/scan/e3e27165-aea8-41e9-ad55-75970e1fa2be?pageSize=100&sortField=id&sortDir=desc"
+         bearerToken: ${{ secrets.HAWKSCAN_TEM_TOKEN }}
+         method: GET
+     - name: Save repo
+       run: |
+         echo '${{ steps.myRequest.outputs.response }}' >> hawkscan.json
+     - name: Publish report to defectdojo
+       id: import-scan
+       uses: ivanamat/defectdojo-import-scan@v1
+       with:
+         token: ${{ secrets.DEFECTOJO_TOKEN }}
+         defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+         engagement: ${{ secrets.ENGAGEMENT }}
+         product_name: ${{ secrets.PRODUCT_NAME }}
+         file: hawkscan.json
+         scan_type: StackHawk HawkScan
+         test_title: StackHawk HawkScan
+         tags: hawkscan
+         skip_duplicates: true
+         close_old_findings: true
+         branch_tag: ${{ github.base_ref }}
+         build_id: ${{ github.run_id }}
+         commit_hash: ${{ github.sha }}
+     - name: Show response of defectdojo
+       run: |
+         set -e
+         printf '%s\n' '${{ steps.import-scan.outputs.response }}'
   
   # hawkscan:
   #   name: hawk-scan
