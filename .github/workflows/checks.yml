@@ -168,15 +168,15 @@ jobs:
                      }
                    ]
                  }
-               }'
+               }' > xray-report-status.json
             
       - name: Parse report ID
         id: parse-report-id
         run: | 
           
-          echo ${{ steps.generate-report.outputs.response }} >> xray-report.json
+          # echo ${{ steps.generate-report.outputs.response }} >> xray-report.json
 
-          jq '.report_id' xray-report.json
+          jq '.report_id' xray-report-status.json
 
       - name: print report ID
         run: | 
