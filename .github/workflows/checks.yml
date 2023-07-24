@@ -181,18 +181,16 @@ jobs:
       - name: Parse report ID
         run: | 
           
-          # reportId ="${{ steps.keywords.outputs.value }}"
-          # echo $reportId
           echo "GENERATE_REPORT_ID=${{ steps.keywords.outputs.value }}" >> $GITHUB_ENV
 
       - name: Export JFrog xray scan report  
         run: | 
 
-          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/${{ env.GENERATE_REPORT_ID }}?file_name=jfrog-report&format=json&projectKey=test' \
+          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/${{ env.GENERATE_REPORT_ID }}?file_name=${{ github.sha }}&format=json&projectKey=test' \
                --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
-               --header 'Accept-Encoding: deflate/gzip' > jfrog-report.zip
+               --header 'Accept-Encoding: deflate/gzip' > ${{ github.sha }}.zip
           
-          unzip jfrog-report.zip 
+          unzip ${{ github.sha }}.zip 
 
       - name: Publish report to defectdojo
         id: import-scan
@@ -202,7 +200,7 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: jfrog-report-${{ github.sha }}.json
+          file: ${{ github.sha }}.json
           scan_type: JFrog Xray Unified Scan
           test_title: JFrog Xray Scan
           active: true
