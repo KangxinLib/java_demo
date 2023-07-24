@@ -335,7 +335,7 @@ jobs:
 
           docker pull nginx
 
-          jf docker scan java_demo:1.0  --min-severity High --fixable-only --watches=Security_watch_1 --format sarif > kangxinzhu.sarif
+          jf docker scan java_demo:1.0 --watches=Security_watch_1 --format sarif > jfrog-xray.sarif
 
         # shell: bash
 
@@ -348,7 +348,7 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: kangxinzhu.sarif
+          file: jfrog-xray.sarif
           scan_type: SARIF
           test_title: JFrog Xray Scan
           tags: JFrog Xray
