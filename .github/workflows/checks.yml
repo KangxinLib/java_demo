@@ -148,50 +148,50 @@ jobs:
           
       #     JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-      - name: Generate Jfrog xray export
-        id: generate-report
-        run: | 
+      # - name: Generate Jfrog xray export
+      #   id: generate-report
+      #   run: | 
           
-          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/vulnerabilities' \
-               --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
-               --header 'Content-Type: application/json' \
-               --data '{
-                 "name": "${{ github.sha }}",
-                 "resources": {
-                   "repositories": [
-                     {
-                       "name": "docker-local"
-                     },
-                     {
-                       "name": "test-libs-release-local"
-                     },
-                     {
-                       "name": "test-libs-release-snapshot"
-                     }
-                   ]
-                 }
-               }' > xray-report-status.json
+      #     curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/vulnerabilities' \
+      #          --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
+      #          --header 'Content-Type: application/json' \
+      #          --data '{
+      #            "name": "${{ github.sha }}",
+      #            "resources": {
+      #              "repositories": [
+      #                {
+      #                  "name": "docker-local"
+      #                },
+      #                {
+      #                  "name": "test-libs-release-local"
+      #                },
+      #                {
+      #                  "name": "test-libs-release-snapshot"
+      #                }
+      #              ]
+      #            }
+      #          }' > xray-report-status.json
 
-      - name: Extract all keywords from xray-report-status.json
-        uses: sergeysova/jq-action@v2
-        id: keywords
-        with:
-          cmd: jq '.report_id' xray-report-status.json
+      # - name: Extract all keywords from xray-report-status.json
+      #   uses: sergeysova/jq-action@v2
+      #   id: keywords
+      #   with:
+      #     cmd: jq '.report_id' xray-report-status.json
 
-      - name: Sleep for 10 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '10s'
+      # - name: Sleep for 10 seconds
+      #   uses: jakejarvis/wait-action@master
+      #   with:
+      #     time: '10s'
             
-      - name: Parse report ID
-        run: | 
+      # - name: Parse report ID
+      #   run: | 
           
-          echo "GENERATE_REPORT_ID=${{ steps.keywords.outputs.value }}" >> $GITHUB_ENV
+      #     echo "GENERATE_REPORT_ID=${{ steps.keywords.outputs.value }}" >> $GITHUB_ENV
 
       - name: Export JFrog xray scan report  
         run: | 
 
-          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/${{ env.GENERATE_REPORT_ID }}?file_name=xray-scan-report&format=json&projectKey=test' \
+          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/18?file_name=xray-scan-report&format=json&projectKey=test' \
                --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
                --header 'Accept-Encoding: deflate/gzip' > xray-scan-report.zip
           
