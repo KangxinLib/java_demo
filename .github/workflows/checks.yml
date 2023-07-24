@@ -146,7 +146,8 @@ jobs:
           
       #     JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-      - name: Generate Jfrog xray export  
+      - name: Generate Jfrog xray export
+        id: generate-report
         run: | 
           
           curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/vulnerabilities' \
@@ -167,9 +168,22 @@ jobs:
                      }
                    ]
                  }
-               }'    
+               }'
+            
+      - name: Parse report ID
+        id: parse-report-id
+        run: | 
+          
+          echo ${{ steps.generate-report.outputs.response }} >> xray-report.json
 
-         
+          jq '.report_id' xray-report.json
+
+      - name: Parse report ID
+        id: parse-report-id
+        run: | 
+          
+          echo ${{ steps.parse-report-id.outputs.response }}
+
       - name: Export JFrog xray scan report  
         run: | 
 
