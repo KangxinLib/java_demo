@@ -185,41 +185,41 @@ jobs:
         run: |
           echo ${{ steps.import-scan.outputs.response }}
 
- hawkscan_defectdojo:
-   name: hawkscan_defectdojo
-   runs-on: ubuntu-latest
-   steps:
-     - name: Make Request
-       id: myRequest
-       uses: fjogeleit/http-request-action@v1
-       with:
-         url: "https://api.stackhawk.com/api/v1/scan/e3e27165-aea8-41e9-ad55-75970e1fa2be?pageSize=100&sortField=id&sortDir=desc"
-         bearerToken: ${{ secrets.HAWKSCAN_TEM_TOKEN }}
-         method: GET
-     - name: Save repo
-       run: |
-         echo '${{ steps.myRequest.outputs.response }}' >> hawkscan.json
-     - name: Publish report to defectdojo
-       id: import-scan
-       uses: ivanamat/defectdojo-import-scan@v1
-       with:
-         token: ${{ secrets.DEFECTOJO_TOKEN }}
-         defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
-         engagement: ${{ secrets.ENGAGEMENT }}
-         product_name: ${{ secrets.PRODUCT_NAME }}
-         file: hawkscan.json
-         scan_type: StackHawk HawkScan
-         test_title: StackHawk HawkScan
-         tags: hawkscan
-         skip_duplicates: true
-         close_old_findings: true
-         branch_tag: ${{ github.base_ref }}
-         build_id: ${{ github.run_id }}
-         commit_hash: ${{ github.sha }}
-     - name: Show response of defectdojo
-       run: |
-         set -e
-         printf '%s\n' '${{ steps.import-scan.outputs.response }}'
+#  hawkscan_defectdojo:
+#    name: hawkscan_defectdojo
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Make Request
+#        id: myRequest
+#        uses: fjogeleit/http-request-action@v1
+#        with:
+#          url: "https://api.stackhawk.com/api/v1/scan/e3e27165-aea8-41e9-ad55-75970e1fa2be?pageSize=100&sortField=id&sortDir=desc"
+#          bearerToken: ${{ secrets.HAWKSCAN_TEM_TOKEN }}
+#          method: GET
+#      - name: Save repo
+#        run: |
+#          echo '${{ steps.myRequest.outputs.response }}' >> hawkscan.json
+#      - name: Publish report to defectdojo
+#        id: import-scan
+#        uses: ivanamat/defectdojo-import-scan@v1
+#        with:
+#          token: ${{ secrets.DEFECTOJO_TOKEN }}
+#          defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
+#          engagement: ${{ secrets.ENGAGEMENT }}
+#          product_name: ${{ secrets.PRODUCT_NAME }}
+#          file: hawkscan.json
+#          scan_type: StackHawk HawkScan
+#          test_title: StackHawk HawkScan
+#          tags: hawkscan
+#          skip_duplicates: true
+#          close_old_findings: true
+#          branch_tag: ${{ github.base_ref }}
+#          build_id: ${{ github.run_id }}
+#          commit_hash: ${{ github.sha }}
+#      - name: Show response of defectdojo
+#        run: |
+#          set -e
+#          printf '%s\n' '${{ steps.import-scan.outputs.response }}'
   
   # hawkscan:
   #   name: hawk-scan
