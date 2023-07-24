@@ -178,10 +178,10 @@ jobs:
         with:
           cmd: jq '.report_id' xray-report-status.json
 
-    - name: Sleep for 10 seconds
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '10s'
+      - name: Sleep for 10 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '10s'
             
       - name: Parse report ID
         run: | 
