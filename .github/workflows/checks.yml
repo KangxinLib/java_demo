@@ -410,16 +410,23 @@ jobs:
          
       - name: Save repo
         run: | 
-          
-          jf rt ping
 
-          jf -v
+          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/4?file_name=kangxinzhu&format=json&projectKey=test' \
+               --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
+               --header 'Accept-Encoding: deflate/gzip' > xray.zip
+          
+          unzip xray.zip 
+          cat *.json
+          
+          # jf rt ping
+
+          # jf -v
 
           # jf docker scan java_demo:1.0 
 
-          docker pull nginx
+          # docker pull nginx
 
-          jf docker scan java_demo:1.0 --watches=Security_watch_1 --format sarif > jfrog-xray.sarif
+          # jf docker scan java_demo:1.0 --watches=Security_watch_1 --format sarif > jfrog-xray.sarif
 
         # shell: bash
 
