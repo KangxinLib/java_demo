@@ -139,20 +139,38 @@ jobs:
           docker tag "java_demo:${{ env.GIT_TAG }}" java_demo:1.0
         shell: bash
 
-      - uses: jfrog/setup-jfrog-cli@v3.3.0
-        env:
-          # JFrog platform url (for example: https://acme.jfrog.io) 
-          JF_URL: ${{ secrets.JF_URL }}
+      # - uses: jfrog/setup-jfrog-cli@v3.3.0
+      #   env:
+      #     # JFrog platform url (for example: https://acme.jfrog.io) 
+      #     JF_URL: ${{ secrets.JF_URL }}
           
-          # Basic authentication credentials
-          # JF_USER: ${{ secrets.JF_USER }}
-          # JF_PASSWORD: ${{ secrets.JF_PASSWORD }}
-          # or
-          # JFrog Platform access token
-          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+      #     JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+
+       - name: Generate Jfrog xray export  
+        run: | 
+
+        curl --location 'https: //zhukangxin.jfrog.io/xray/api/v1/reports/vulnerabilities' \
+        --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
+        --header 'Content-Type: application/json' \
+        --data '{
+          "name": "jfrog-test-report-%Y%m%d%H%M%S",
+          "resources": {
+            "repositories": [
+              {
+                "name": "docker-local"
+              },
+              {
+                "name": "test-libs-release-local"
+              },
+              {
+                "name": "test-libs-release-snapshot"
+              }
+            ]
+          }
+        }'    
 
          
-      - name: Save repo
+      - name: Export JFrog xray scan report  
         run: | 
 
           curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/4?file_name=kangxinzhu&format=json&projectKey=test' \
