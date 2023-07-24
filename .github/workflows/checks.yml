@@ -59,6 +59,8 @@ jobs:
           file: ./codeql/java.sarif
           scan_type: SARIF
           test_title: Codeql Scan
+          active: true
+          verified: false
           tags: codeql
           skip_duplicates: true
           close_old_findings: true
@@ -98,6 +100,8 @@ jobs:
           file: snyk.json
           scan_type: Snyk Scan
           test_title: Snyk Scan
+          active: true
+          verified: false
           tags: snyk
           skip_duplicates: true
           close_old_findings: true
@@ -168,6 +172,8 @@ jobs:
           file: kangxinzhu.json
           scan_type: JFrog Xray Unified Scan
           test_title: JFrog Xray Scan
+          active: true
+          verified: false
           tags: JFrog Xray
           skip_duplicates: true
           close_old_findings: true
