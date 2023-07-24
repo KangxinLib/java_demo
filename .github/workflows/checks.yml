@@ -171,22 +171,28 @@ jobs:
                    ]
                  }
                }' > xray-report-status.json
+
+      - name: Extract all keywords from xray-report-status.json
+        uses: sergeysova/jq-action@v2
+        id: keywords
+        with:
+          cmd: jq '.report_id' xray-report-status.json
             
       - name: Parse report ID
         run: | 
           
-          report_id ="$(echo jq '.report_id' xray-report-status.json )"
+          report_id ="${{ steps.keywords.outputs.value }}"
           echo "$report_id"
           echo "GENERATE_REPORT_ID=$report_id" >> $GITHUB_ENV
 
       - name: Export JFrog xray scan report  
         run: | 
 
-          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/${{ env.GENERATE_REPORT_ID }}?file_name=kangxinzhu&format=json&projectKey=test' \
+          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/${{ env.GENERATE_REPORT_ID }}?file_name=jfrog-report-${{ github.sha }}&format=json&projectKey=test' \
                --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
-               --header 'Accept-Encoding: deflate/gzip' > xray.zip
+               --header 'Accept-Encoding: deflate/gzip' > jfrog-report-${{ github.sha }}.zip
           
-          unzip xray.zip 
+          unzip jfrog-report-${{ github.sha }}.zip 
 
       - name: Publish report to defectdojo
         id: import-scan
@@ -196,7 +202,7 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: kangxinzhu.json
+          file: jfrog-report-${{ github.sha }}.json
           scan_type: JFrog Xray Unified Scan
           test_title: JFrog Xray Scan
           active: true
