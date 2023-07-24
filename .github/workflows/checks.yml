@@ -205,6 +205,9 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --sarif-file-output=snyk.sarif
+      - name: show snyk.sarif
+        run: |
+          cat snyk.sarif
       - name: Upload Test results
         uses: actions/upload-artifact@master
         with:
