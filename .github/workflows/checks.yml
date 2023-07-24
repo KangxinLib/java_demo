@@ -205,6 +205,11 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --sarif-file-output=snyk.sarif
+      - name: Upload Test results
+        uses: actions/upload-artifact@master
+        with:
+          name: test report
+          path: snyk.sarif
       - name: Publish report to defectdojo
         id: import-scan
         uses: ivanamat/defectdojo-import-scan@v1
