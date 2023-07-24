@@ -188,11 +188,11 @@ jobs:
       - name: Export JFrog xray scan report  
         run: | 
 
-          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/${{ env.GENERATE_REPORT_ID }}?file_name=jfrog-report-${{ github.sha }}&format=json&projectKey=test' \
+          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/export/${{ env.GENERATE_REPORT_ID }}?file_name=jfrog-report&format=json&projectKey=test' \
                --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
-               --header 'Accept-Encoding: deflate/gzip' > jfrog-report-${{ github.sha }}.zip
+               --header 'Accept-Encoding: deflate/gzip' > jfrog-report.zip
           
-          unzip jfrog-report-${{ github.sha }}.zip 
+          unzip jfrog-report.zip 
 
       - name: Publish report to defectdojo
         id: import-scan
