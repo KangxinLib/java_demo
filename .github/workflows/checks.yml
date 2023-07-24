@@ -153,7 +153,7 @@ jobs:
                --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
                --header 'Content-Type: application/json' \
                --data '{
-                 "name": "jfrog-report-$(date +%H-%M)",
+                 "name": "jfrog-report-${{ github.sha }}",
                  "resources": {
                    "repositories": [
                      {
