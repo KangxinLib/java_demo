@@ -178,8 +178,7 @@ jobs:
 
           jq '.report_id' xray-report.json
 
-      - name: Parse report ID
-        id: parse-report-id
+      - name: print report ID
         run: | 
           
           echo ${{ steps.parse-report-id.outputs.response }}
