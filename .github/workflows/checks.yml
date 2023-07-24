@@ -181,9 +181,9 @@ jobs:
       - name: Parse report ID
         run: | 
           
-          report_id ="${{ steps.keywords.outputs.value }}"
-          echo "$report_id"
-          echo "GENERATE_REPORT_ID=$report_id" >> $GITHUB_ENV
+          reportId ="${{ steps.keywords.outputs.value }}"
+          echo $reportId
+          echo "GENERATE_REPORT_ID=$reportId" >> $GITHUB_ENV
 
       - name: Export JFrog xray scan report  
         run: | 
