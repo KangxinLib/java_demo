@@ -149,7 +149,7 @@ jobs:
       - name: Generate Jfrog xray export  
         run: | 
           
-          curl --location 'https: //zhukangxin.jfrog.io/xray/api/v1/reports/vulnerabilities' \
+          curl --location 'https://zhukangxin.jfrog.io/xray/api/v1/reports/vulnerabilities' \
                --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
                --header 'Content-Type: application/json' \
                --data '{
