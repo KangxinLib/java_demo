@@ -416,7 +416,7 @@ jobs:
                --header 'Accept-Encoding: deflate/gzip' > xray.zip
           
           unzip xray.zip 
-          cat *.json
+          # cat *.json
           
           # jf rt ping
 
@@ -439,8 +439,8 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: jfrog-xray.sarif
-          scan_type: SARIF
+          file: kangxinzhu.json
+          scan_type: JFrog Xray Unified Scan
           test_title: JFrog Xray Scan
           tags: JFrog Xray
           skip_duplicates: true
