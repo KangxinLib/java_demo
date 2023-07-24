@@ -87,7 +87,7 @@ jobs:
           json: true
       - name: show snyk.sarif & snyk.json
         run: |
-          cat snyk.sarif
+          #cat snyk.sarif
           cat snyk.json
       - name: Upload Test results
         uses: actions/upload-artifact@master
@@ -102,8 +102,8 @@ jobs:
           defectdojo_url: ${{ secrets.DEFECTOJO_URL }}
           engagement: ${{ secrets.ENGAGEMENT }}
           product_name: ${{ secrets.PRODUCT_NAME }}
-          file: snyk.sarif
-          scan_type: SARIF
+          file: snyk.json
+          scan_type: Snyk Scan
           test_title: Snyk Scan
           tags: snyk
           skip_duplicates: true
