@@ -146,28 +146,28 @@ jobs:
           
       #     JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
 
-       - name: Generate Jfrog xray export  
+      - name: Generate Jfrog xray export  
         run: | 
-
-        curl --location 'https: //zhukangxin.jfrog.io/xray/api/v1/reports/vulnerabilities' \
-        --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
-        --header 'Content-Type: application/json' \
-        --data '{
-          "name": "jfrog-test-report-%Y%m%d%H%M%S",
-          "resources": {
-            "repositories": [
-              {
-                "name": "docker-local"
-              },
-              {
-                "name": "test-libs-release-local"
-              },
-              {
-                "name": "test-libs-release-snapshot"
-              }
-            ]
-          }
-        }'    
+          
+          curl --location 'https: //zhukangxin.jfrog.io/xray/api/v1/reports/vulnerabilities' \
+               --header 'Authorization: Bearer ${{ secrets.JF_ACCESS_TOKEN }}' \
+               --header 'Content-Type: application/json' \
+               --data '{
+                 "name": "jfrog-test-report-%Y%m%d%H%M%S",
+                 "resources": {
+                   "repositories": [
+                     {
+                       "name": "docker-local"
+                     },
+                     {
+                       "name": "test-libs-release-local"
+                     },
+                     {
+                       "name": "test-libs-release-snapshot"
+                     }
+                   ]
+                 }
+               }'    
 
          
       - name: Export JFrog xray scan report  
