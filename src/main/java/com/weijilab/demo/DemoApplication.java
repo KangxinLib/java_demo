@@ -35,7 +35,7 @@ public class DemoApplication {
     @GetMapping(value = "/basic-info", produces = MediaType.TEXT_PLAIN_VALUE)
     public String getBasicInfo() {
         String result = "";
-        result = result + "ENVIRONMENT kangxinz\n";
+        result = result + "ENVIRONMENT this is a test thanks\n";
         result = result + "-----------\n";
         for (var e : new TreeMap<>(System.getenv()).entrySet()) {
             // key length 30 so that KUBERNETES_SERVICE_PORT_HTTPS fits in
