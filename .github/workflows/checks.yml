@@ -138,15 +138,24 @@ jobs:
           pwd
           ls -al
           docker build  --tag "java_demo:${{ env.GIT_TAG }}" .
-          docker tag "java_demo:${{ env.GIT_TAG }}" java_demo:1.0
+          # docker tag "java_demo:${{ env.GIT_TAG }}" java_demo:1.0
         shell: bash
 
-      # - uses: jfrog/setup-jfrog-cli@v3.3.0
-      #   env:
-      #     # JFrog platform url (for example: https://acme.jfrog.io) 
-      #     JF_URL: ${{ secrets.JF_URL }}
+      - uses: jfrog/setup-jfrog-cli@v3.3.0
+        env:
+          # JFrog platform url (for example: https://acme.jfrog.io) 
+          JF_URL: ${{ secrets.JF_URL }}
           
-      #     JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+          JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+
+      - name: login jfrog and tag images and push
+        run: | 
+          
+          docker login -u929574375@qq.com zhukangxin.jfrog.io 
+
+          docker tag "java_demo:${{ env.GIT_TAG }}" zhukangxin.jfrog.io/docker-local/java_demo:${{ env.GIT_TAG }}
+
+          docker push zhukangxin.jfrog.io/docker-local/java_demo:${{ env.GIT_TAG }}
 
       - name: Generate Jfrog xray export
         id: generate-report
