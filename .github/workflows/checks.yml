@@ -151,7 +151,7 @@ jobs:
       - name: login jfrog and tag images and push
         run: | 
           
-          docker login -u929574375@qq.com zhukangxin.jfrog.io 
+          docker login -u929574375@qq.com -p ${{ secrets.JF_ACCESS_TOKEN }} zhukangxin.jfrog.io 
 
           docker tag "java_demo:${{ env.GIT_TAG }}" zhukangxin.jfrog.io/docker-local/java_demo:${{ env.GIT_TAG }}
 
