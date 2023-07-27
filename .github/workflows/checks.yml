@@ -135,8 +135,7 @@ jobs:
         run: |-
           ./gradlew build
           export BUILD_NUMBER=`./gradlew artifactoryPublish 2>&1 | tee stdout.log | grep https://zhukangxin.jfrog.io/artifactory/webapp/builds/demo/ | sed "s/.*builds\/demo\///g" | sed 's/\n//g'`
-          echo "BUILD_NUMBER=$BUILD_NUMBER"
-          echo "::set-env name=BUILD_NUMBER::$BUILD_NUMBER"
+          echo "export BUILD_NUMBER=$BUILD_NUMBER" | tee .build_number
           cat stdout.log
       - name: Build Image
         run: |-
@@ -150,6 +149,7 @@ jobs:
           JF_URL: ${{ secrets.JF_URL }}
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
       - run: |-
+          source .build_number
           echo "BUILD_NUMBER=$BUILD_NUMBER"
           jf bs --fail=false demo $BUILD_NUMBER
 
