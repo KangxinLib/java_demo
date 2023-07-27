@@ -227,7 +227,7 @@ jobs:
           test_title: JFrog Xray Scan
           active: true
           verified: false
-          tags: JFrog Xray
+          tags: Xray
           skip_duplicates: true
           close_old_findings: true
           push_to_jira: false
