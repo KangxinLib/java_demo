@@ -129,26 +129,28 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@4137be6a8bf7d7133955359dbd952c0ca73b1021
-        with:
-          arguments: build artifactoryPublish
+      - name: Build & Publish with Gradle
+        uses: gradle/gradle-build-action@v2
+      - name: Execute Gradle build and artifactoryPublish
+        run: |-
+          ./gradlew build
+          export BUILD_NUMBER=`./gradlew artifactoryPublish 2>&1 | tee stdout.log | grep https://zhukangxin.jfrog.io/artifactory/webapp/builds/demo/ | sed "s/.*builds\/demo\///g" | sed 's/\n//g'
+          cat stdout.log
       - name: Build Image
         run: |-
           pwd
           ls -al
           docker build  --tag "java_demo:${{ env.GIT_TAG }}" .
-          # docker tag "java_demo:${{ env.GIT_TAG }}" java_demo:1.0
         shell: bash
 
       - uses: jfrog/setup-jfrog-cli@v3.3.0
         env:
-          # JFrog platform url (for example: https://acme.jfrog.io) 
           JF_URL: ${{ secrets.JF_URL }}
-          
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+      - run: |-
+          jf bs --fail=false demo $BUILD_NUMBER
 
-      - name: login jfrog and tag images and push
+      - name: docker login jfrog container registry and tag images and push
         run: | 
           
           docker login -u929574375@qq.com -p ${{ secrets.JF_ACCESS_TOKEN }} zhukangxin.jfrog.io 
