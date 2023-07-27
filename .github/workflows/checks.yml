@@ -134,7 +134,7 @@ jobs:
       - name: Execute Gradle build and artifactoryPublish
         run: |-
           ./gradlew build
-          export BUILD_NUMBER=`./gradlew artifactoryPublish 2>&1 | tee stdout.log | grep https://zhukangxin.jfrog.io/artifactory/webapp/builds/demo/ | sed "s/.*builds\/demo\///g" | sed 's/\n//g'
+          export BUILD_NUMBER=`./gradlew artifactoryPublish 2>&1 | tee stdout.log | grep https://zhukangxin.jfrog.io/artifactory/webapp/builds/demo/ | sed "s/.*builds\/demo\///g" | sed 's/\n//g'`
           cat stdout.log
       - name: Build Image
         run: |-
