@@ -172,6 +172,9 @@ jobs:
                        "name": "docker-local"
                      },
                      {
+                       "name": "test-gradle-local"
+                     },
+                     {
                        "name": "test-libs-release-local"
                      },
                      {
